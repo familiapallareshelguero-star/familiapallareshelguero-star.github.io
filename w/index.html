@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abrir en MPFmyGYM</title>
+<meta property="og:title" content="Entreno para MPFmyGYM">
+<meta property="og:description" content="Púlsalo para abrirlo en la app">
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #000; color: #f3efe6; font: 16px/1.45 system-ui, sans-serif; }
+  main { max-width: 420px; padding: 24px 16px; text-align: center; }
+  h1 { color: #f5c518; font-size: 26px; margin: 0 0 8px; }
+  a.btn { display: block; margin: 22px 0 10px; padding: 16px; border-radius: 14px; background: #f5c518; color: #000; font-weight: 700; text-decoration: none; font-size: 18px; }
+  p { color: #b9b4aa; }
+  button { margin-top: 8px; background: none; border: 1px solid #444; color: #f3efe6; border-radius: 12px; padding: 12px 16px; font: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>MPFmyGYM</h1>
+  <p id="what">Te han enviado un entreno.</p>
+  <a class="btn" id="open" href="#">Abrir en la app</a>
+  <p class="small">Si no se abre, actualiza MPFmyGYM a la última versión.<br>También puedes copiar el código y abrir la app: te preguntará si lo quieres.</p>
+  <button id="copy">Copiar el código</button>
+</main>
+<script>
+  // El código viaja después de la # (no se envía a ningún servidor).
+  var code = (location.hash || '').slice(1);
+  var intent = 'intent://open?c=' + code + '#Intent;scheme=mpfmygym;package=es.mpfmygym.app;end';
+  var a = document.getElementById('open');
+  a.href = intent;
+  if (!/^MPFGYM[01]\./.test(code)) { document.getElementById('what').textContent = 'Este enlace está incompleto. Pide que te lo vuelvan a enviar.'; a.style.display = 'none'; }
+  else setTimeout(function () { location.href = intent; }, 300);
+  document.getElementById('copy').onclick = function () {
+    navigator.clipboard.writeText(code).then(function () { document.getElementById('copy').textContent = 'Copiado ✓'; });
+  };
+</script>
+</body>
+</html>
